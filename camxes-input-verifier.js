@@ -15,8 +15,10 @@
  * This extension includes camxes.js parser from:
  *     https://github.com/Ilmen-vodhr/ilmentufa
  */
-function resetLojbanInputVerifierKeyup(){
-    if(this.value === '')
+function resetLojbanInputVerifierKeyup(e)
+{
+    // empty
+    if (this.value === '')
     {
         $(this)
             .attr('title', '')
@@ -25,39 +27,81 @@ function resetLojbanInputVerifierKeyup(){
         return;
     }
 
-    var response = {
+    var newValue = $(this).val();
+    var oldValue = $(this).data('prevval');
+    if (
+        // a non-literal change
+        oldValue === $(this).val()
+
+        // a whitespace change makes no syntax difference in Lojban
+        || (
+            oldValue
+            && oldValue.replace(/ /g, '') === newValue.replace(/ /g, '')
+        )
+    )
+    {
+        return;
+    }
+
+    // Save new value as old
+    $(this).data('prevval', $(this).val());
+
+    var pressedKey = e.key.toLowerCase();
+    switch(pressedKey)
+    {
+        // a repeated vowel makes no syntax difference in Lojban
+        case 'a':
+        case 'b':
+        case 'c':
+        case 'd':
+        case 'e':
+            if ($(this).val().replace(' ', '').substr(-2, 2) === pressedKey + pressedKey)
+            {
+                return;
+            }
+            break;
+    }
+
+    var response =
+    {
         gramatical: false,
         parse: [],
         error: {},
     };
 
-    try {
-        p = camxes.parse(this.value);
+    try
+    {
+        console.log('parsing');
+        camxes.parse(newValue);
         response.gramatical = true;
-        response.parse = p;
-    } catch(se) {
+    }
+    catch(se)
+    {
         /* SyntaxError */
         response.error = se;
     }
 
-    if (response.gramatical) {
+    if (response.gramatical)
+    {
         $(this)
             .attr('title', 'Grammatical for camxes')
             .css('background-color', 'rgba(0,100,0,0.2)')
         ;
-    } else {
+    }
+    else
+    {
         $(this)
             .attr('title', 'Ungrammatical for camxes due to ' + response.error)
             .css('background-color', 'rgba(100,0,0,0.2)')
         ;
-        return;
     }
 }
 
-function resetLojbanInputVerifierTimeout(){
+function resetLojbanInputVerifierTimeout()
+{
     setTimeout(function(){
         // check if we are still within Lojban Discord channel
-        if(location.href.substr(0, location.href.lastIndexOf('/')) === 'https://discordapp.com/channels/230498134843850762')
+        if (location.href.substr(0, location.href.lastIndexOf('/')) === 'https://discordapp.com/channels/230498134843850762')
         {
             // try to attach / re-attach* keyup binding; * in case of channel switch
             $('.chat form textarea').on('keyup', resetLojbanInputVerifierKeyup);

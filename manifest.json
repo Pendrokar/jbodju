@@ -1,18 +1,21 @@
 {
   "manifest_version": 2,
 
-  "name": "jbodju",
-  "description": "Helps reading of lojban text by overlaying parse tree from camxes.js.",
+  "name": "jbotolna'e",
+  "description": "With `camxes` verifies that input Lojban text is valid while it is being written in Discord.",
   "version": "0.1",
+
+  // "permissions": [
+  //   "tabs"
+  // ],
 
   "content_scripts" : [
     {
-      "matches" : [ 
-         "*://*.lojban.org/*",
-         "*://groups.google.com/*"
+      "matches" : [
+         "*://discordapp.com/channels/230498134843850762/*"
       ],
-      "css": [ "contentscript.css" ],
-      "js" : [ "camxes.js", "contentscript.js" ]
+      "js" : [ "jquery.min.js", "camxes.js", "camxes-input-verifier.js" ],
+      "run_at": "document_idle"
     }
   ]
 }

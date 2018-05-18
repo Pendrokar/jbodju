@@ -1,7 +1,7 @@
-jbodju
+jbotolna'e - Lojban Verifier on Discord chat section
 ======
 
-jbodju Chrome Extension
+jbotolna'e, based on jbodju Chrome Extension
 
 
 Installation
@@ -15,15 +15,6 @@ Installation
 Usage
 =====
 
-Currently only enabled on "*://*.lojban.org/*" and "*://groups.google.com/*".
+Currently only enabled on "*://discordapp.com/channels/230498134843850762/*".
 
-Select some lojban text or click some lojban text.
-
-Clicking text may not work so well, because if there are other HTML nodes in the text it will stop at them.
-Selecting text means it doesn't need to try and figure out where the text to parse starts/ends.
-
-If the text is deemed gramatical by camxes.js, then the parse tree will be added to the page.
-
-You can toggle elided terminators.
-
-Click some other text or click close to get rid of the parse tree.
+If the text is deemed gramatical by camxes.js, then the text box will appear greenish. Otherwise it will have a red tint.

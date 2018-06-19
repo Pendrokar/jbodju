@@ -15,6 +15,6 @@ Installation
 Usage
 =====
 
-Currently only enabled on "*://discordapp.com/channels/230498134843850762/*".
+Currently only enabled on "*://discordapp.com/channels/230498134843850762/*". ([Lojban Discord channel invite](https://discord.gg/NMwaaDN))
 
 If the text is deemed gramatical by camxes.js, then the text box will appear greenish. Otherwise it will have a red tint. Also in case of an error, a message will appear when hovered over.
